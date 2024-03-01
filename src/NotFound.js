@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
+// REMEMBER: Add Styling to the page {@link Add}
 const NotFound = () => {
     let navigate = useNavigate();
 
