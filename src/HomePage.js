@@ -11,7 +11,7 @@ const HomePage = () => {
     return (
         <div className="home-page">
             <h2>Welcome</h2>
-            <p>Using this too ou can organize your day with simple todo-list!</p>
+            <p>Using this tool you can organize your day with simple To-Do list!</p>
             <button onClick={() => handleStart()}>Begin!</button>
         </div>
     );
