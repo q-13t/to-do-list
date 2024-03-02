@@ -5,7 +5,7 @@ const HomePage = () => {
 
 
     let handleStart = () => {
-        navigate('/login');
+        navigate('/todo');
     }
 
     return (
