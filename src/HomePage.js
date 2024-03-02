@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router-dom';
 const HomePage = () => {
     let navigate = useNavigate();
 
+    // TODO: Redirect user to to-do list if logged in
+    console.log("username", sessionStorage.getItem("username"));
+    console.log("user logged in? ", sessionStorage.getItem("username") !== null);
 
     let handleStart = () => {
-        navigate('/todo');
+        navigate('/login');
     }
 
     return (

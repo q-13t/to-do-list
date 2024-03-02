@@ -22,7 +22,7 @@ const useFetch = (url) => {
                     updateError(null);
                 })
                 .catch(e => {
-                    if (e.name != "AbortError") {
+                    if (e.name !== "AbortError") {
                         updateError(e.message);
                         updateLoading(false);
                     }
