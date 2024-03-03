@@ -12,7 +12,7 @@ function App() {
                 <Routes>
                     <Route path='/' element={<HomePage />}></Route>
                     <Route exact path='/login' element={<Login />}></Route>// TODO: Implement login page
-                    {/* <Route exact path='/todo' element={<ToDo />}></Route> */}
+                    <Route exact path='/todo' element={<ToDo />}></Route>
                     <Route path='*' element={<NotFound />}></Route>
                 </Routes>
             </div>

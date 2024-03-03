@@ -1,12 +1,96 @@
+import { useState } from "react";
 import useFetch from "./useFetch";
+import { useNavigate } from 'react-router-dom';
 
 const ToDo = () => {
+    let navigate = useNavigate();
+    let username = sessionStorage.getItem('username');// get currently logged in User
 
+    if (username === null) { navigate('/login') }//Redirect user to login page if not logged in
+
+    let { data, loading, error } = useFetch('http://localhost:8000/todo?username=' + username);
+    const [rerender, setRerender] = useState(false);// Dummy to rerender
+
+
+    let handleTaskDelete = (id) => {
+        fetch('http://localhost:8000/todo/' + id,
+            {
+                method: 'DELETE',
+            }
+        ).catch(err => {
+            console.log("Error: ", err);
+        });
+        document.getElementById('el-id-' + id).remove();
+    }
+
+    let handleTaskAdd = () => {
+        fetch('http://localhost:8000/todo',
+            {
+                method: 'POST',
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({ username: username, data: '', status: false })
+            }
+        ).then(response => {
+            return response.json();
+        }).then(json => {
+            data.push(json);
+            setRerender(!rerender);
+        }).catch(err => {
+            console.log("Error: ", err);
+        });
+    }
+
+    let handleTaskDataChange = (el, data) => {
+        if (el.data === data) { return; }
+        el.data = data;
+        fetch('http://localhost:8000/todo/' + el.id,
+            {
+                method: 'PATCH',
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify(el)
+            }
+        ).catch(err => {
+            console.log("Error: ", err);
+        });
+    }
+
+    let handleTaskStatusChange = (el, status) => {
+        el.status = status;
+        fetch('http://localhost:8000/todo/' + el.id,
+            {
+                method: 'PATCH',
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify(el)
+            }
+        ).catch(err => {
+            console.log("Error: ", err);
+        });
+    }
+
+    let handleEnterKey = (e) => {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            e.target.blur();
+        }
+    }
 
     return (
         <div className="todo-pane">
-
-        </div>
+            <h3>To Do:</h3>
+            {data &&
+                <div className="todo-list" id="todo-list">
+                    <button onClick={() => { handleTaskAdd() }}>Add Task</button>
+                    {data.map((el) => (
+                        <div className="todo-element" id={`el-id-${el.id}`} key={`el-id-${el.id}`} >
+                            <input type="checkbox" defaultChecked={el.status} onChange={(e) => { handleTaskStatusChange(el, e.target.checked) }}></input>
+                            <textarea defaultValue={el.data} onKeyUp={(e) => { handleEnterKey(e) }} onBlur={(e) => { handleTaskDataChange(el, e.target.value) }}></textarea>
+                            <button onClick={() => { handleTaskDelete(el.id) }}>X</button>
+                        </div>
+                    ))}
+                </div>}
+            {loading && <div>Loading...</div>}
+            {error && <div style={{ color: '#B52123', fontWeight: 600, fontSize: 20 }}>{error}</div>}
+        </div >
     );
 }
 
