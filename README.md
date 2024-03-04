@@ -3,9 +3,9 @@
 
 ## How To
 1. Make sure you have [NPM](https://www.npmjs.com/) and [Git](https://git-scm.com/) installed
-    Run `git -- version` and `npm --version` in the command line
+- Run `git -- version` and `npm --version` in the command line
 2. Clone this repository using git
-    Run `git clone https://github.com/q-13t/to-do-list.git` in the command line
+- Run `git clone https://github.com/q-13t/to-do-list.git` in the command line
 3. Navigate to the folder using `cd to-do-list`
 4. Run `npm install` in the command line
 4. Run `npm run start` in the command line
@@ -14,4 +14,8 @@
 
 
 # Example
+
+
+
+https://github.com/q-13t/to-do-list/assets/105020553/5522e5cc-2bb8-4e20-ac6e-908a39f28540
 
