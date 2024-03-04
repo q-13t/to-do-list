@@ -55,6 +55,7 @@ const ToDo = () => {
     }
 
     let handleTaskStatusChange = (el, status) => {
+        if (el.status === status) { return; }
         el.status = status;
         fetch('http://localhost:8000/todo/' + el.id,
             {
@@ -62,7 +63,16 @@ const ToDo = () => {
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify(el)
             }
-        ).catch(err => {
+        ).then(response => {
+            if (response.ok) {
+                if (status) {
+                    document.getElementById(`el-text-${el.id}`).style.textDecoration = "line-through";
+                } else {
+                    document.getElementById(`el-text-${el.id}`).style.textDecoration = "none";
+                }
+                setRerender(!rerender);
+            }
+        }).catch(err => {
             console.log("Error: ", err);
         });
     }
@@ -82,8 +92,14 @@ const ToDo = () => {
                     <button onClick={() => { handleTaskAdd() }} className="add-task">Add Task</button>
                     {data.map((el) => (
                         <div className="todo-element" id={`el-id-${el.id}`} key={`el-id-${el.id}`} >
-                            <input className="todo-checkbox" type="checkbox" defaultChecked={el.status} onChange={(e) => { handleTaskStatusChange(el, e.target.checked) }}></input>
-                            <textarea maxLength={128} className="todo-text" defaultValue={el.data} onKeyUp={(e) => { handleEnterKey(e) }} onBlur={(e) => { handleTaskDataChange(el, e.target.value) }}></textarea>
+                            <input id={`el-checkbox-${el.id}`} className="todo-checkbox" type="checkbox" defaultChecked={el.status} onChange={(e) => { handleTaskStatusChange(el, e.target.checked) }}></input>
+                            <textarea
+                                id={`el-text-${el.id}`}
+                                maxLength={128}
+                                style={{ textDecoration: el.status ? "line-through" : "none" }}
+                                className="todo-text" defaultValue={el.data}
+                                onKeyUp={(e) => { handleEnterKey(e) }}
+                                onBlur={(e) => { handleTaskDataChange(el, e.target.value) }}></textarea>
                             <button className="todo-delete" onClick={() => { handleTaskDelete(el.id) }}>X</button>
                         </div>
                     ))}
