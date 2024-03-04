@@ -25,9 +25,6 @@ const Login = () => {
             updateStatus("Please enter username and password");
             return;
         }
-        console.log("Username:", username);
-        console.log("Password:", password);
-
         digestMessage(password).then((sha) => {// Proceed after obtaining SHA256 password
             fetch("http://localhost:8000/users?username=" + username)
                 .then(data => {
@@ -36,7 +33,6 @@ const Login = () => {
                     }
                     return data.json();
                 }).then(json => {
-                    console.log(json);
                     if (json.length === 0) {// If there's no user
                         throw Error("User not registered");
                     } else if (json[0].password !== sha) { // check password
@@ -46,9 +42,12 @@ const Login = () => {
                     navigate('/todo');
                     updateStatus(null);// Clear error message
                 }).catch(err => {
-                    updateStatus(err.message);
+                    if (err.message === "Failed to fetch") {
+                        updateStatus('Server Not Responding');
+                    } else {
+                        updateStatus(err.message);
+                    }
                 })
-            console.log(sha);
         });
     }
 
@@ -64,12 +63,18 @@ const Login = () => {
             ).then(() => {
                 sessionStorage.setItem("username", username);
                 navigate('/todo');
-            });
+            }).catch(err => {
+                if (err.message === "Failed to fetch") {
+                    updateStatus('Server Not Responding');
+                } else {
+                    updateStatus(err.message);
+                }
+            })
         });
     }
     return (
         <div className="login-page">
-            <button onClick={() => { handleHome() }}>X</button>
+            <button id='close' onClick={() => { handleHome() }}>X</button>
             <input type="text" placeholder="username" maxLength={64}
                 value={username}
                 onChange={(e) => updateUsername(e.target.value)}
@@ -79,11 +84,13 @@ const Login = () => {
                 value={password}
                 onChange={(e) => updatePassword(e.target.value)}
             ></input>
-            <button onClick={() => { handleLogin() }}>Login</button>
-            <label>or</label>
-            <button onClick={() => { handleRegister() }}>Register</button>
+            <div id='login-controls'>
+                <button id='login' onClick={() => { handleLogin() }}>Login</button>
+                <span style={{ margin: '0px 10px' }}>or</span>
+                <button id='register' onClick={() => { handleRegister() }}>Register</button>
+            </div>
             {status && <label className='login-error'>{status}</label>}
-        </div>
+        </div >
     );
 }
 
