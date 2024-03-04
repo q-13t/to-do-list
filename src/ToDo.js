@@ -78,13 +78,13 @@ const ToDo = () => {
         <div className="todo-pane">
             <h3>To Do:</h3>
             {data &&
-                <div className="todo-list" id="todo-list">
-                    <button onClick={() => { handleTaskAdd() }}>Add Task</button>
+                <div className="todo-container" id="todo-container">
+                    <button onClick={() => { handleTaskAdd() }} className="add-task">Add Task</button>
                     {data.map((el) => (
                         <div className="todo-element" id={`el-id-${el.id}`} key={`el-id-${el.id}`} >
-                            <input type="checkbox" defaultChecked={el.status} onChange={(e) => { handleTaskStatusChange(el, e.target.checked) }}></input>
-                            <textarea defaultValue={el.data} onKeyUp={(e) => { handleEnterKey(e) }} onBlur={(e) => { handleTaskDataChange(el, e.target.value) }}></textarea>
-                            <button onClick={() => { handleTaskDelete(el.id) }}>X</button>
+                            <input className="todo-checkbox" type="checkbox" defaultChecked={el.status} onChange={(e) => { handleTaskStatusChange(el, e.target.checked) }}></input>
+                            <textarea maxLength={128} className="todo-text" defaultValue={el.data} onKeyUp={(e) => { handleEnterKey(e) }} onBlur={(e) => { handleTaskDataChange(el, e.target.value) }}></textarea>
+                            <button className="todo-delete" onClick={() => { handleTaskDelete(el.id) }}>X</button>
                         </div>
                     ))}
                 </div>}
