@@ -1,22 +1,38 @@
 {
-    "users": [
-        {
-            "id": "1",
-            "username": "abc",
-            "password": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5"
-        },
-        {
-            "id": "2",
-            "username": "abcde",
-            "password": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5"
-        }
-    ],
-    "todo": [
-        {
-            "id": "3",
-            "user": "abc",
-            "data": "Buy mIlk",
-            "status": true
-        }
-    ]
+  "users": [
+    {
+      "id": "1",
+      "username": "abc",
+      "password": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5"
+    },
+    {
+      "id": "2",
+      "username": "abcde",
+      "password": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5"
+    },
+    {
+      "id": "6e1b",
+      "username": "admin",
+      "password": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"
+    },
+    {
+      "id": "5ab6",
+      "username": "user",
+      "password": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5"
+    }
+  ],
+  "todo": [
+    {
+      "id": "9caf",
+      "username": "user",
+      "data": "Something to do",
+      "status": false
+    },
+    {
+      "id": "8ec8",
+      "username": "user",
+      "data": "Something done!",
+      "status": true
+    }
+  ]
 }
